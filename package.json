@@ -1,0 +1,24 @@
+{
+  "name": "imagesearchlayer",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "mongodb": "^2.2.29",
+    "nodemon": "^1.11.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon -w server.js server.js"  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pinion31/ImageSearchLayer.git"
+  },
+  "author": "Chris Cantu",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pinion31/ImageSearchLayer/issues"
+  },
+  "homepage": "https://github.com/pinion31/ImageSearchLayer#readme"
+}
