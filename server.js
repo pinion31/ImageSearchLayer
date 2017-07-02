@@ -3,19 +3,17 @@ var fs = require('fs');
 var url = require('url');
 var GoogleSearch = require('google-search');
 var googleSearch = new GoogleSearch({
-  key: 'AIzaSyB5lv4HA07uUcrtU3-oxKQl05oNk90LyIw',
-  cx: '009489450447108043722:hvm4sscmlww'
+  key: process.env.KEY,
+  cx: process.env.CX
 });
 var mongodb = require('mongodb');
 var mongoClient = mongodb.MongoClient;
 var urlDB = process.env.MONGOLAB_URI;
 
-
-
 http.createServer(function(req,res) {
   var resultArr = [];
   var q = url.parse(req.url, true);
-  //console.log(q.query.search);
+
  mongoClient.connect(urlDB, function(err, db) {
    if (err) {return "Database Connection Error"};
 
@@ -24,7 +22,6 @@ http.createServer(function(req,res) {
      db.collection('searchHistory').find({},{_id: 0}).sort({ $natural: -1 }).toArray(function(err, history) {
         if (err) {return err};
         res.end(JSON.stringify(history));
-        //res.end("return");
      });
 
     }
@@ -37,10 +34,8 @@ http.createServer(function(req,res) {
       }, function(error, response) {
         if (error) {return "error getting results";}
         var i;
-        console.log(q.query.search);
-        //console.dir(response);
         var timeOfSearchRequest = new Date();
-        console.log(q.query.offset);
+
         //inserts search term and time for search history storage
         db.collection('searchHistory').insertOne({searchTerm: q.query.search,
           timeRequested:timeOfSearchRequest.toDateString() + " " + timeOfSearchRequest.toLocaleTimeString() });
@@ -58,6 +53,7 @@ http.createServer(function(req,res) {
 
     }
     else {
+      //default return page with fields
       fs.readFile('./static/index.html', function (err, data) {
          if (err) {return err};
 
